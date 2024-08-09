@@ -190,16 +190,6 @@ fn parse_hotkey(hotkey: &str) -> Result<HotKey, HotKeyParseError> {
                     return Err(HotKeyParseError::EmptyToken(hotkey.to_string()));
                 }
 
-                if key.is_some() {
-                    // At this point we have parsed the modifiers and a main key, so by reaching
-                    // this code, the function either received more than one main key or
-                    //  the hotkey is not in the right order
-                    // examples:
-                    // 1. "Ctrl+Shift+C+A" => only one main key should be allowd.
-                    // 2. "Ctrl+C+Shift" => wrong order
-                    return Err(HotKeyParseError::InvalidFormat(hotkey.to_string()));
-                }
-
                 match token.to_uppercase().as_str() {
                     "OPTION" | "ALT" => {
                         mods |= Modifiers::ALT;
